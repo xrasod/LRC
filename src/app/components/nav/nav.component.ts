@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ConfigComponent} from "../config/config.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-nav',
@@ -23,6 +24,7 @@ import {ConfigComponent} from "../config/config.component";
     MatListModule,
     MatIconModule,
     AsyncPipe,
+    RouterLink,
   ]
 })
 export class NavComponent {

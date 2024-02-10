@@ -1,1 +1,36 @@
-<p>debug works!</p>
+<div class="grid-container">
+  <h1>Data-debugger</h1>
+  <form #debugForm="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="Enter UUID" name="url" [(ngModel)]="model.uid" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="getData()">Fetch Data</button>
+  </form>
+  @if (fetchedData.mappedData && fetchedData.sourceData) {
+
+    <mat-grid-list cols="2" rowHeight="500" gutterSize="35">
+      <mat-grid-tile colspan="1" rowspan="1">
+        <mat-card class="data-card">
+          <mat-card-header>
+            <mat-card-title>Source Data</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <pre>{{ fetchedData.sourceData }}</pre>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <mat-card class="data-card">
+          <mat-card-header>
+            <mat-card-title>Mapped Data</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <pre>{{ fetchedData.mappedData}}</pre>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  }
+</div>

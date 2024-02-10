@@ -1,15 +1,17 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import LadokTuple from "../../../models/ladokTuple";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RemoteService {
 
-  _port = signal(3000);
-  _host = signal('localhost');
+  private _port = signal(3000);
+  private _host = signal('localhost');
+  private _connectionString = computed(() => `http://${this._host()}:${this._port()}` );
+  _httpService = inject(HttpClient);
 
-  constructor() {
-  }
 
   /**
    * Set the port number for the remote service
@@ -33,6 +35,12 @@ export class RemoteService {
 
   public getHost() {
     return computed(() => this._host())
+  }
+
+  public getLadokData (type: string, uid: string){
+    const url = this._connectionString() + '/debug/' + type + '/' + uid;
+    console.log('url', url);
+    return this._httpService.get<LadokTuple>(url);
   }
 
 }
