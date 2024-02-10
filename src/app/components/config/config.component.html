@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Config</h2>
+<mat-dialog-content>
+  <form #configForm="ngForm" (ngSubmit)="save()">
+    <mat-form-field>
+      <mat-label>Host</mat-label>
+      <input matInput [(ngModel)]="model.host" name="host"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Port</mat-label>
+      <input matInput [(ngModel)]="model.port" name="port"/>
+    </mat-form-field>
+
+    <button mat-button color="accent" (click)="close(configForm.form.dirty)" type="button">Close</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!configForm.form.valid && configForm.form.pristine">Save</button>
+  </form>
+
+</mat-dialog-content>
