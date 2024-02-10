@@ -1,14 +1,16 @@
 import {Component, inject} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {RemoteService} from "../../core/services/remote.service";
-import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import LadokTuple from "../../../models/ladokTuple";
 import {FormsModule} from "@angular/forms";
 import {MatFormField} from "@angular/material/form-field";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
-import {JsonPipe} from "@angular/common";
+import {AsyncPipe, JsonPipe} from "@angular/common";
+import {JsonViewerComponent} from "../../components/json-viewer/json-viewer.component";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-debug',
@@ -25,6 +27,8 @@ import {JsonPipe} from "@angular/common";
     MatCardContent,
     MatCardTitle,
     JsonPipe,
+    JsonViewerComponent,
+    AsyncPipe,
   ],
   templateUrl: './debug.component.html',
   styleUrl: './debug.component.scss'
@@ -42,10 +46,9 @@ export class DebugComponent {
     uid: ''
   }
 
-  fetchedData: LadokTuple = {
-    sourceData: '',
-    mappedData: '',
-  }
+  fetchedData: LadokTuple | undefined;
+  filter  = new BehaviorSubject<string>("");
+  search = new BehaviorSubject<string>("");
 
   constructor() {
     switch (this._activatedRoute.snapshot.url[this._activatedRoute.snapshot.url.length - 1].path) {
@@ -77,6 +80,14 @@ export class DebugComponent {
       }
     });
 
+  }
+
+  filterData(filter: string) {
+    this.filter.next(filter);
+  }
+
+  searchData(search: string) {
+    this.search.next(search);
   }
 
 }
