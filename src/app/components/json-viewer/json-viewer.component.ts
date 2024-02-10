@@ -33,9 +33,7 @@ export class JsonViewerComponent implements AfterViewInit {
   @Input() collapseAll: EventEmitter<void>;
 
   ngAfterViewInit(): void {
-    console.log('looking for that bish');
     if (this.view) {
-      console.log('found that bish');
       this.view.nativeElement.data = JSON.parse(this.json);
     }
 
