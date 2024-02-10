@@ -4,10 +4,34 @@
 
 
 
+//.debug-card {
+//  position: absolute;
+//  top: 15px;
+//  left: 15px;
+//  right: 15px;
+//  bottom: 15px;
+//}
+
+
+.card-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+}
+
 .debug-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  width: 100%;
+}
+
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+
+.search-button {
+  height:56px;
 }

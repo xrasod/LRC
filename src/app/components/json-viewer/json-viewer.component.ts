@@ -40,16 +40,18 @@ export class JsonViewerComponent implements AfterViewInit {
     }
 
     this.filter.pipe(
-      debounceTime(50),
+      debounceTime(100),
     ).subscribe((filter: string) => {
       if (this.view) {
         console.log('filter', filter);
-        this.view.nativeElement.filter(filter);
+        let query = filter !== '' ? new RegExp(`.*${filter}.*`, 'i') : '';
+        this.view.nativeElement.filter(query);
+        // this.view.nativeElement.filter(filter);
       }
     });
 
     this.search.pipe(
-      debounceTime(50),
+      debounceTime(100),
     ).subscribe((search: string) => {
       if (this.view) {
         console.log('search', search);
