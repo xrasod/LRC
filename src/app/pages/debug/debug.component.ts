@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {RemoteService} from "../../core/services/remote.service";
 import {ActivatedRoute} from "@angular/router";
@@ -46,7 +46,13 @@ export class DebugComponent {
     uid: ''
   }
 
-  fetchedData: LadokTuple | undefined;
+  fetchedData: {
+    sourceData: WritableSignal<string>,
+    mappedData: WritableSignal<string>
+  } = {
+    sourceData: signal(''),
+    mappedData: signal('')
+  };
   filter  = new BehaviorSubject<string>("");
   search = new BehaviorSubject<string>("");
 
@@ -72,11 +78,13 @@ export class DebugComponent {
 
     this._remoteService.getLadokData(this.type, this.model.uid).subscribe({
       next: (data: LadokTuple) => {
-        this.fetchedData = data;
+        this.fetchedData.mappedData.set(data.mappedData);
+        this.fetchedData.sourceData.set(data.sourceData);
       },
       error: (error) => {
         console.error(error);
-        this.fetchedData = {sourceData: 'Error', mappedData: 'Error'};
+        this.fetchedData.mappedData.set(JSON.stringify(error));
+        this.fetchedData.sourceData.set(JSON.stringify(error));
       }
     });
 

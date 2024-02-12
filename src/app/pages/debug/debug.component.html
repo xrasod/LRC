@@ -14,7 +14,7 @@
   </div>
 
 
-  @if (fetchedData && fetchedData.mappedData && fetchedData.sourceData) {
+  @if (fetchedData && fetchedData.mappedData() !== '' && fetchedData.sourceData() !== '') {
 
 
     <div class="card-wrapper">

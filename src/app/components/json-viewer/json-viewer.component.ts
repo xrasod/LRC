@@ -1,10 +1,10 @@
 import {
   AfterViewInit,
   Component,
-  CUSTOM_ELEMENTS_SCHEMA,
+  CUSTOM_ELEMENTS_SCHEMA, effect,
   ElementRef,
   EventEmitter,
-  Input,
+  Input, Signal,
   ViewChild
 } from '@angular/core';
 import '@alenaksu/json-viewer';
@@ -26,15 +26,21 @@ export class JsonViewerComponent implements AfterViewInit {
 
   @ViewChild('jsonData', {static: true}) view: ElementRef | undefined;
 
-  @Input() json: string = '';
+  @Input() json: Signal<string>;
   @Input() filter: Observable<string>;
   @Input() search: Observable<string>;
   @Input() expandAll: EventEmitter<void>;
   @Input() collapseAll: EventEmitter<void>;
 
+  jsonEffect = effect(() => {
+    if (this.view) {
+      this.view.nativeElement.data = JSON.parse(this.json());
+    }
+  });
+
   ngAfterViewInit(): void {
     if (this.view) {
-      this.view.nativeElement.data = JSON.parse(this.json);
+      this.view.nativeElement.data = JSON.parse(this.json());
     }
 
     this.filter.pipe(
